@@ -1,5 +1,8 @@
 # pr-daikou
 
+[![CircleCI](https://circleci.com/gh/rvillage/pr-daikou/tree/master.svg?style=svg)](https://circleci.com/gh/rvillage/pr-daikou/tree/master)
+[![Gem Version](https://badge.fury.io/rb/pr-daikou.svg)](https://badge.fury.io/rb/pr-daikou)
+
 `pr-daikou` is agency script for Create Pull Request.
 
 By requesting a build to CI service (e.g. CircleCI) to execute this script, Automatic code correction (e.g. `rubocop --auto-correct`, `bundle update`) is invoked, then commit changes and create pull request to GitHub repository if there some changes exist.
