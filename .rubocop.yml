@@ -1,0 +1,55 @@
+inherit_from: .rubocop_todo.yml
+
+AllCops:
+  TargetRubyVersion: 2.5
+
+Layout/AlignHash:
+  EnforcedHashRocketStyle: table
+  EnforcedColonStyle: table
+
+Layout/IndentArray:
+  EnforcedStyle: consistent
+
+Layout/IndentHash:
+  EnforcedStyle: consistent
+
+Layout/IndentHeredoc:
+  EnforcedStyle: squiggly
+
+Layout/IndentationConsistency:
+  EnforcedStyle: rails
+
+Layout/SpaceInsideBlockBraces:
+  SpaceBeforeBlockParameters: false
+
+Layout/SpaceInsideHashLiteralBraces:
+  EnforcedStyle: no_space
+
+Lint/DefEndAlignment:
+  AutoCorrect: true
+
+Lint/EndAlignment:
+  AutoCorrect: true
+
+Lint/InheritException:
+  EnforcedStyle: standard_error
+
+Style/FrozenStringLiteralComment:
+  EnforcedStyle: never
+  AutoCorrect: false
+
+Style/MutableConstant:
+  AutoCorrect: false
+
+Style/PercentLiteralDelimiters:
+  PreferredDelimiters:
+    default: '()'
+
+Style/RaiseArgs:
+  EnforcedStyle: compact
+
+Style/RegexpLiteral:
+  AllowInnerSlashes: true
+
+Style/UnneededInterpolation:
+  AutoCorrect: false

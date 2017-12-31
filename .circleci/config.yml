@@ -1,0 +1,40 @@
+version: 2
+
+jobs:
+  rake_build:
+    working_directory: /usr/src/app
+    docker:
+      - image: ruby:2.5-alpine3.7
+    steps:
+      - checkout
+      - run: apk --update --upgrade add --no-cache git openssh
+      - run: bundle install -j4 --retry=3
+      - run: rake build
+
+  deploy:
+    docker:
+      - image: circleci/ruby:2.5
+    steps:
+      - checkout
+      - run:
+          name: create rubygems credentials
+          command: |
+            mkdir ~/.gem
+            echo -e "---\n:rubygems_api_key: ${RUBYGEMS_API_KEY}" > ~/.gem/credentials
+            chmod 0600 ~/.gem/credentials
+      - run: bundle install -j4 --retry=3
+      - run: rake release
+
+workflows:
+  version: 2
+
+  workflow:
+    jobs:
+      - rake_build
+      - deploy:
+          requires:
+            - rake_build
+          filters:
+            branches:
+              only:
+                - deploy/production

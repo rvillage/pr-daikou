@@ -1,0 +1,9 @@
+# make shell
+shell:
+	docker-compose run --rm ruby /bin/sh
+
+# make release_tag
+# Set git config --local user.email and git config --local user.name
+release_tag:
+	git checkout master
+	docker-compose run --rm ruby sh -c 'apk --update --upgrade add --no-cache git openssh && rake release:source_control_push[https://<github_api_key>@github.com/rvillage/pr-daikou]'
