@@ -17,8 +17,7 @@ module PRDaikou
         email:       'pr_daikou@example.com',
         name:        'pr_daikou',
         base:        'master',
-        topic:       'ci/pr-daikou',
-        url:         nil
+        topic:       'ci/pr-daikou'
       }
     end
 
@@ -40,7 +39,6 @@ module PRDaikou
           opt.on('-m', '--commit MESSAGE', "add git commit message, default: #{@options[:commit]}") {|v| @options[:commit] = v }
           opt.on('-b', '--base BRANCH', "pull request base branch, default: #{@options[:base]}") {|v| @options[:base] = v }
           opt.on('-t', '--topic BRANCH', "create new branch, default: #{@options[:topic]}_[20170101123456.000]") {|v| @options[:topic] = v }
-          opt.on('-u', '--pullrequest URL', 'add new pull request description, default: nil') {|v| @options[:url] = v }
         end
       end
   end

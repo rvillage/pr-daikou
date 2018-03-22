@@ -82,7 +82,6 @@ Usage: pr-daikou [options]
     -m, --commit MESSAGE             add git commit message, default: :robot: PR daikou
     -b, --base BRANCH                pull request base branch, default: master
     -t, --topic BRANCH               create new branch, default: ci/pr-daikou_[20170101123456.000]
-    -u, --pullrequest URL            add new pull request description, default: nil
 ```
 
 ## Contributing
