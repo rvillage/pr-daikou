@@ -1,13 +1,53 @@
 version: 2
 
 jobs:
-  rake_build:
+  ruby_2.2:
     working_directory: /usr/src/app
     docker:
-      - image: ruby:2.5-alpine3.7
+      - image: ruby:2.2-alpine
     steps:
       - checkout
-      - run: apk --update --upgrade add --no-cache git openssh
+      - run: apk --update add --no-cache git openssh
+      - run: bundle install -j4 --retry=3
+      - run: rake build
+
+  ruby_2.3:
+    working_directory: /usr/src/app
+    docker:
+      - image: ruby:2.3-alpine
+    steps:
+      - checkout
+      - run: apk --update add --no-cache git openssh
+      - run: bundle install -j4 --retry=3
+      - run: rake build
+
+  ruby_2.4:
+    working_directory: /usr/src/app
+    docker:
+      - image: ruby:2.4-alpine
+    steps:
+      - checkout
+      - run: apk --update add --no-cache git openssh
+      - run: bundle install -j4 --retry=3
+      - run: rake build
+
+  ruby_2.5:
+    working_directory: /usr/src/app
+    docker:
+      - image: ruby:2.5-alpine
+    steps:
+      - checkout
+      - run: apk --update add --no-cache git openssh
+      - run: bundle install -j4 --retry=3
+      - run: rake build
+
+  ruby_latest:
+    working_directory: /usr/src/app
+    docker:
+      - image: ruby:alpine
+    steps:
+      - checkout
+      - run: apk --update add --no-cache git openssh
       - run: bundle install -j4 --retry=3
       - run: rake build
 
@@ -30,10 +70,18 @@ workflows:
 
   workflow:
     jobs:
-      - rake_build
+      - ruby_2.2
+      - ruby_2.3
+      - ruby_2.4
+      - ruby_2.5
+      - ruby_latest
       - deploy:
           requires:
-            - rake_build
+            - ruby_2.2
+            - ruby_2.3
+            - ruby_2.4
+            - ruby_2.5
+            - ruby_latest
           filters:
             branches:
               only:
