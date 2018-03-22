@@ -78,7 +78,7 @@ Usage: pr-daikou [options]
         --email EMAIL                git committed user email, default: pr_daikou@example.com
         --name NAME                  git committed user name, default: pr_daikou
     -T, --title TITLE                pull request title, default: PR daikou [at Mon Jan 1 12:34:56 UTC 2017]
-        --description DESC           pull request description, default: PR daikou
+        --description DESC           pull request description, default: ""
     -m, --commit MESSAGE             add git commit message, default: :robot: PR daikou
     -b, --base BRANCH                pull request base branch, default: master
     -t, --topic BRANCH               create new branch, default: ci/pr-daikou_[20170101123456.000]
