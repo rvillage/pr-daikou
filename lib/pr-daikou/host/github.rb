@@ -8,11 +8,9 @@ module PRDaikou
       module_function
 
       def create_branch(email, username, new_branch, commit_message)
-        `git config --local user.email "#{email}"`
-        `git config --local user.name "#{username}"`
         `git checkout -b #{new_branch}`
         `git add .`
-        `git commit -m "#{commit_message}"`
+        `GIT_AUTHOR_NAME=#{username} GIT_AUTHOR_EMAIL=#{email} GIT_COMMITTER_NAME=#{username} GIT_COMMITTER_EMAIL=#{email} git commit -m "#{commit_message}"`
         `git push #{repository_url} #{new_branch}`
       end
 
