@@ -7,6 +7,12 @@ Layout/AlignHash:
   EnforcedHashRocketStyle: table
   EnforcedColonStyle: table
 
+Layout/DefEndAlignment:
+  AutoCorrect: true
+
+Layout/EndAlignment:
+  AutoCorrect: true
+
 Layout/IndentArray:
   EnforcedStyle: consistent
 
@@ -16,20 +22,11 @@ Layout/IndentHash:
 Layout/IndentHeredoc:
   EnforcedStyle: squiggly
 
-Layout/IndentationConsistency:
-  EnforcedStyle: rails
-
 Layout/SpaceInsideBlockBraces:
   SpaceBeforeBlockParameters: false
 
 Layout/SpaceInsideHashLiteralBraces:
   EnforcedStyle: no_space
-
-Lint/DefEndAlignment:
-  AutoCorrect: true
-
-Lint/EndAlignment:
-  AutoCorrect: true
 
 Lint/InheritException:
   EnforcedStyle: standard_error
@@ -43,7 +40,12 @@ Style/MutableConstant:
 
 Style/PercentLiteralDelimiters:
   PreferredDelimiters:
-    default: '()'
+    default: ()
+    '%i': ()
+    '%I': ()
+    '%r': ()
+    '%w': ()
+    '%W': ()
 
 Style/RaiseArgs:
   EnforcedStyle: compact

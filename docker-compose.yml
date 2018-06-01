@@ -2,7 +2,7 @@ version: '3'
 
 services:
   ruby:
-    image: ruby:2.5-alpine3.7
+    image: ruby:2.5.1-alpine3.7
     container_name: pr-daikou_ruby
     working_dir: /usr/src/app
     command: ruby -v
