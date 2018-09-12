@@ -27,10 +27,10 @@ module PRDaikou
         options[:base],
         topic_branch(options[:topic], current_time)
       )
-    unless options[:labels].count.zero?
+    unless options[:labels].empty?
       PRDaikou::Host::Github.add_labels_to_pullrequest(
         pullrequest_number,
-        options[:labels]
+        options[:labels].split
       )
     end
 
