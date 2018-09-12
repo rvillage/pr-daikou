@@ -20,7 +20,8 @@ module PRDaikou
           --data #{Shellwords.escape({title: title, body: description, head: new_branch, base: base_branch}.to_json)}
         OPTIONS
 
-        `curl #{options} https://api.github.com/repos/#{repository_name}/pulls`
+        response = `curl #{options} https://api.github.com/repos/#{repository_name}/pulls`
+        JSON.parse(response)['number']
       end
 
       def repository_url

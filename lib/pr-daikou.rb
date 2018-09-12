@@ -20,12 +20,13 @@ module PRDaikou
       topic_branch(options[:topic], current_time),
       options[:commit]
     )
-    PRDaikou::Host::Github.create_pullrequest(
-      pullrequest_title(options[:title]),
-      pullrequest_description(options[:description]),
-      options[:base],
-      topic_branch(options[:topic], current_time)
-    )
+    pullrequest_number =
+      PRDaikou::Host::Github.create_pullrequest(
+        pullrequest_title(options[:title]),
+        pullrequest_description(options[:description]),
+        options[:base],
+        topic_branch(options[:topic], current_time)
+      )
 
     true
   end
