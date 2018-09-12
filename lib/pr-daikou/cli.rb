@@ -18,7 +18,7 @@ module PRDaikou
         name:        'pr_daikou',
         base:        'master',
         topic:       'ci/pr-daikou',
-        labels:      nil
+        labels:      ''
       }
     end
 
