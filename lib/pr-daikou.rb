@@ -27,6 +27,12 @@ module PRDaikou
         options[:base],
         topic_branch(options[:topic], current_time)
       )
+    if options[:labels]
+      PRDaikou::Host::Github.add_labels_to_pullrequest(
+        pullrequest_number,
+        options[:labels]
+      )
+    end
 
     true
   end

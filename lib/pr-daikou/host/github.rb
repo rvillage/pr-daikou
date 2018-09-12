@@ -24,6 +24,15 @@ module PRDaikou
         JSON.parse(response)['number']
       end
 
+      def add_labels_to_pullrequest(pullrequest_number, labels)
+        options = <<~OPTIONS.strip
+          -X POST -H "Authorization: token #{ENV['GITHUB_ACCESS_TOKEN']}" \
+          --data #{Shellwords.escape(labels.to_json)}
+        OPTIONS
+
+        `curl #{options} https://api.github.com/repos/#{repository_name}/issues/#{pullrequest_number}/labels`
+      end
+
       def repository_url
         "https://#{ENV['GITHUB_ACCESS_TOKEN']}@github.com/#{repository_name}"
       end
