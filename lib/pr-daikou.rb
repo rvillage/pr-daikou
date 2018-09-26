@@ -30,7 +30,7 @@ module PRDaikou
     unless options[:labels].empty?
       PRDaikou::Host::Github.add_labels_to_pullrequest(
         pullrequest_number,
-        options[:labels].split
+        options[:labels].split(',')
       )
     end
 
