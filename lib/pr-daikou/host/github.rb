@@ -20,7 +20,17 @@ module PRDaikou
           --data #{Shellwords.escape({title: title, body: description, head: new_branch, base: base_branch}.to_json)}
         OPTIONS
 
-        `curl #{options} https://api.github.com/repos/#{repository_name}/pulls`
+        response = `curl #{options} https://api.github.com/repos/#{repository_name}/pulls`
+        JSON.parse(response)['number']
+      end
+
+      def add_labels_to_pullrequest(pullrequest_number, labels)
+        options = <<~OPTIONS.strip
+          -X POST -H "Authorization: token #{ENV['GITHUB_ACCESS_TOKEN']}" \
+          --data #{Shellwords.escape(labels.to_json)}
+        OPTIONS
+
+        `curl #{options} https://api.github.com/repos/#{repository_name}/issues/#{pullrequest_number}/labels`
       end
 
       def repository_url
