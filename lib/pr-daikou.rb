@@ -20,12 +20,19 @@ module PRDaikou
       topic_branch(options[:topic], current_time),
       options[:commit]
     )
-    PRDaikou::Host::Github.create_pullrequest(
-      pullrequest_title(options[:title]),
-      pullrequest_description(options[:description]),
-      options[:base],
-      topic_branch(options[:topic], current_time)
-    )
+    pullrequest_number =
+      PRDaikou::Host::Github.create_pullrequest(
+        pullrequest_title(options[:title]),
+        pullrequest_description(options[:description]),
+        options[:base],
+        topic_branch(options[:topic], current_time)
+      )
+    unless options[:labels].empty?
+      PRDaikou::Host::Github.add_labels_to_pullrequest(
+        pullrequest_number,
+        options[:labels].split(',').map(&:strip)
+      )
+    end
 
     true
   end

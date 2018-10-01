@@ -17,7 +17,8 @@ module PRDaikou
         email:       'pr_daikou@example.com',
         name:        'pr_daikou',
         base:        'master',
-        topic:       'ci/pr-daikou'
+        topic:       'ci/pr-daikou',
+        labels:      ''
       }
     end
 
@@ -39,6 +40,7 @@ module PRDaikou
         opt.on('-m', '--commit MESSAGE', "add git commit message, default: #{@options[:commit]}") {|v| @options[:commit] = v }
         opt.on('-b', '--base BRANCH', "pull request base branch, default: #{@options[:base]}") {|v| @options[:base] = v }
         opt.on('-t', '--topic BRANCH', "create new branch, default: #{@options[:topic]}_[20170101123456.000]") {|v| @options[:topic] = v }
+        opt.on('-L', '--labels LABELS', "add labels, which should be separated by comma, default: #{@options[:labels]}") {|v| @options[:labels] = v }
       end
     end
   end
