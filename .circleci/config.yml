@@ -33,7 +33,8 @@ jobs:
             echo -e "---\n:rubygems_api_key: ${RUBYGEMS_API_KEY}" > ~/.gem/credentials
             chmod 0600 ~/.gem/credentials
       - run: bundle install -j4 --retry=3
-      - deploy: rake release
+      - deploy:
+          command: rake release
 
 workflows:
   workflow:
