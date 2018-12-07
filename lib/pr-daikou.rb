@@ -12,14 +12,17 @@ module PRDaikou
       raise 'Please input ENV of GITHUB_ACCESS_TOKEN'
     end
 
-    return unless code_changed?
+    unless options[:only_pullrequest]
+      return unless code_changed?
 
-    PRDaikou::Host::Github.create_branch(
-      options[:email],
-      options[:name],
-      topic_branch(options[:topic], current_time),
-      options[:commit]
-    )
+      PRDaikou::Host::Github.create_branch(
+        options[:email],
+        options[:name],
+        topic_branch(options[:topic], current_time),
+        options[:commit]
+      )
+    end
+
     pullrequest_number =
       PRDaikou::Host::Github.create_pullrequest(
         pullrequest_title(options[:title]),

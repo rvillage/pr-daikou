@@ -11,14 +11,15 @@ module PRDaikou
 
     def initialize
       @options = {
-        commit:      ':robot: PR daikou',
-        title:       'PR daikou',
-        description: '',
-        email:       'pr_daikou@example.com',
-        name:        'pr_daikou',
-        base:        'master',
-        topic:       'ci/pr-daikou',
-        labels:      ''
+        commit:           ':robot: PR daikou',
+        title:            'PR daikou',
+        description:      '',
+        email:            'pr_daikou@example.com',
+        name:             'pr_daikou',
+        base:             'master',
+        topic:            'ci/pr-daikou',
+        labels:           '',
+        only_pullrequest: false
       }
     end
 
@@ -41,6 +42,7 @@ module PRDaikou
         opt.on('-b', '--base BRANCH', "pull request base branch, default: #{@options[:base]}") {|v| @options[:base] = v }
         opt.on('-t', '--topic BRANCH', "create new branch, default: #{@options[:topic]}_[20170101123456.000]") {|v| @options[:topic] = v }
         opt.on('-L', '--labels LABELS', "add labels, which should be separated by comma, default: #{@options[:labels]}") {|v| @options[:labels] = v }
+        opt.on('-P', '--only-pullrequest', "Create Pull requests, default: #{@options[:only_pullrequest]}") {|_v| @options[:only_pullrequest] = true }
       end
     end
   end
