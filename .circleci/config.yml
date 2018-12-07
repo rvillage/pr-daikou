@@ -1,57 +1,27 @@
-version: 2
+version: 2.1
+
+executors:
+  ruby:
+    parameters:
+      version:
+        type: string
+    docker:
+      - image: ruby:<< parameters.version >>
+    working_directory: /usr/src/app
 
 jobs:
-  ruby_2.2:
-    working_directory: /usr/src/app
-    docker:
-      - image: ruby:2.2-alpine
+  test:
+    parameters:
+      image:
+        type: executor
+    executor: << parameters.image >>
     steps:
+      - run: apk add --no-cache git openssh
       - checkout
-      - run: apk --update add --no-cache git openssh
       - run: bundle install -j4 --retry=3
       - run: rake build
 
-  ruby_2.3:
-    working_directory: /usr/src/app
-    docker:
-      - image: ruby:2.3-alpine
-    steps:
-      - checkout
-      - run: apk --update add --no-cache git openssh
-      - run: bundle install -j4 --retry=3
-      - run: rake build
-
-  ruby_2.4:
-    working_directory: /usr/src/app
-    docker:
-      - image: ruby:2.4-alpine
-    steps:
-      - checkout
-      - run: apk --update add --no-cache git openssh
-      - run: bundle install -j4 --retry=3
-      - run: rake build
-
-  ruby_2.5:
-    working_directory: /usr/src/app
-    docker:
-      - image: ruby:2.5-alpine
-    steps:
-      - checkout
-      - run: apk --update add --no-cache git openssh
-      - run: bundle install -j4 --retry=3
-      - run: rake build
-
-  ruby_latest:
-    working_directory: /usr/src/app
-    docker:
-      - image: ruby:alpine
-    steps:
-      - checkout
-      - run: apk --update add --no-cache git openssh
-      - run: bundle install -j4 --retry=3
-      - run: rake build
-
-  deploy:
+  release:
     docker:
       - image: circleci/ruby:2.5
     steps:
@@ -63,25 +33,43 @@ jobs:
             echo -e "---\n:rubygems_api_key: ${RUBYGEMS_API_KEY}" > ~/.gem/credentials
             chmod 0600 ~/.gem/credentials
       - run: bundle install -j4 --retry=3
-      - run: rake release
+      - deploy: rake release
 
 workflows:
-  version: 2
-
   workflow:
     jobs:
-      - ruby_2.2
-      - ruby_2.3
-      - ruby_2.4
-      - ruby_2.5
-      - ruby_latest
-      - deploy:
+      - test:
+          name: test-ruby_latest
+          image:
+            name: ruby
+            version: alpine
+      - test:
+          name: test-ruby2.5
+          image:
+            name: ruby
+            version: 2.5-alpine
+      - test:
+          name: test-ruby2.4
+          image:
+            name: ruby
+            version: 2.4-alpine
+      - test:
+          name: test-ruby2.3
+          image:
+            name: ruby
+            version: 2.3-alpine
+      - test:
+          name: test-ruby2.2
+          image:
+            name: ruby
+            version: 2.2-alpine
+      - release:
           requires:
-            - ruby_2.2
-            - ruby_2.3
-            - ruby_2.4
-            - ruby_2.5
-            - ruby_latest
+            - test-ruby_latest
+            - test-ruby2.5
+            - test-ruby2.4
+            - test-ruby2.3
+            - test-ruby2.2
           filters:
             branches:
               only:
