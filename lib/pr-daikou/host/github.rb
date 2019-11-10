@@ -1,5 +1,6 @@
 require 'json'
 require 'shellwords'
+require 'git_clone_url'
 
 module PRDaikou
   module Host
@@ -37,8 +38,21 @@ module PRDaikou
         "https://#{ENV['GITHUB_ACCESS_TOKEN']}@github.com/#{repository_name}"
       end
 
-      def repository_name
-        /^.+?github.com[:\/](?<repository_name>.+?)\.git$/.match(`git config --get remote.origin.url`)[:repository_name]
+      # ==== Examples
+      #
+      #   repository_name('git@github.com:rvillage/pr-daikou.git')       # rvillage/pr-daikou
+      #   repository_name('ssh://git@github.com/rvillage/pr-daikou.git') # rvillage/pr-daikou
+      #   repository_name('https://github.com/rvillage/pr-daikou')       # rvillage/pr-daikou
+      #   repository_name('git://github.com/rvillage/pr-daikou.git')     # rvillage/pr-daikou
+      #
+      def repository_name(url = `git config --get remote.origin.url`.strip)
+        path = GitCloneUrl.parse(url).path
+
+        if path.start_with? '/'
+          path.slice!(0)
+        end
+
+        path[0...path.split('.').first.size]
       end
     end
   end
