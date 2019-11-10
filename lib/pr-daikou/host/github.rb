@@ -1,6 +1,6 @@
 require 'json'
 require 'shellwords'
-require 'uri'
+require 'git_clone_url'
 
 module PRDaikou
   module Host
@@ -40,12 +40,19 @@ module PRDaikou
 
       # ==== Examples
       #
+      #   repository_name('git@github.com:rvillage/pr-daikou.git')       # rvillage/pr-daikou
       #   repository_name('ssh://git@github.com/rvillage/pr-daikou.git') # rvillage/pr-daikou
       #   repository_name('https://github.com/rvillage/pr-daikou')       # rvillage/pr-daikou
+      #   repository_name('git://github.com/rvillage/pr-daikou.git')     # rvillage/pr-daikou
       #
       def repository_name(url = `git config --get remote.origin.url`.strip)
-        path = URI.parse(url).path
-        path[1...path.rindex('.')]
+        path = GitCloneUrl.parse(url).path
+
+        if path.start_with? '/'
+          path.slice!(0)
+        end
+
+        path[0...path.split('.').first.size]
       end
     end
   end
